@@ -13,19 +13,12 @@ unitlist = row_units + column_units + square_units
 diagonal_units1 =  [list(np.char.array(list('ABCDEFGHI') + np.char.array(list('123456789'))))]
 diagonal_units2 =  [list(np.char.array(list('ABCDEFGHI') + np.char.array(list('987654321'))))]
 
-#print(square_units)
-#print(diagonal_units1)
-#print(diagonal_units2)
-
 unitlist = unitlist + diagonal_units1 + diagonal_units2
-
 
 
 # Must be called after all units (including diagonals) are added to the unitlist
 units = extract_units(unitlist, boxes)
 peers = extract_peers(units, boxes)
-
-#print('peers:', peers)
 
 
 def naked_twins(values):
@@ -75,20 +68,17 @@ def naked_twins(values):
 
         for boxB in peers_boxA:
 
-            peers_boxB = peers[boxB]
-            
-            if values[boxA] == values[boxB] and len(values[boxA])==2:
-                #print(values[boxA], values[boxB])
-                intersect =  list(peers_boxA & peers_boxB)
-                for peer in intersect:
-                    for digit in values[boxA]:
-                        #print('digit:', digit)
-                        out[peer] = out[peer].replace(digit,'')
+            if boxA != boxB:
+
+                peers_boxB = peers[boxB]
+                
+                if values[boxA] == values[boxB] and len(values[boxA])==2:
+                    intersect =  list(peers_boxA & peers_boxB)
+                    for peer in intersect:
+                        for digit in values[boxA]:
+                            out[peer] = out[peer].replace(digit,'')
          
-    #print('out:', out)
-
     return out
-
 
 
 def eliminate(values):
